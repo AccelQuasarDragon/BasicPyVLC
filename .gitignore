@@ -2,3 +2,4 @@
 poetry.lock
 build
 dist
+.DS_Store

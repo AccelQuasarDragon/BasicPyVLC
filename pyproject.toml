@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.10, <3.13"
 python-vlc = "^3.0.20123"
 pyinstaller = "^6.3.0"
+pyside6 = [{version = "^6.6.1", platform = "darwin"}]
 
 
 [build-system]

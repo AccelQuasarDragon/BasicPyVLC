@@ -6,8 +6,9 @@ authors = ["AccelQuasarDragon <138998466+AccelQuasarDragon@users.noreply.github.
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.10, <3.13"
 python-vlc = "^3.0.20123"
+pyinstaller = "^6.3.0"
 
 
 [build-system]

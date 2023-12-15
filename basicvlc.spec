@@ -4,8 +4,8 @@ medianame = "bigbuckbunny x265.mp4"
 
 a = Analysis(
     ['basicpyvlc.py'],
-    pathex=["C:\Personalize\VLC"],
-    binaries=[("C:\Personalize\VLC\plugins\*", "plugins")],
+    pathex=[], #insert your base VLC path here, ex: pathex=["D:\KivySchool\VLC"], 
+    binaries=[], #insert plugins folder, ex: binaries=[("D:\KivySchool\VLC\plugins\*", "plugins")],
     datas=[(medianame, ".")],
     hiddenimports=[],
     hookspath=[],
@@ -19,7 +19,7 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries +[("libVLC.dll", "C:\Personalize\VLC\libvlc.dll", "BINARY")],
+    a.binaries, #add libvlc here, ex: a.binaries + [("libVLC.dll", "D:\KivySchool\VLC\libvlc.dll", "BINARY")],
     a.datas,
     [],
     name='basicvlc',

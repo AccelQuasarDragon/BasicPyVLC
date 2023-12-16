@@ -31,7 +31,7 @@ a = Analysis(
     datas=[
         (medianame, "."),
         #(vlclocation,"."),
-        ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/.venv/lib/python3.10/site-packages/vlc.py" , "."),
+        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/.venv/lib/python3.10/site-packages/vlc.py" , "."),
         #*collect_data_files("vlc", include_py_files=True),
         #*copy_metadata("vlc)
         ],
@@ -51,8 +51,8 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz,
     a.scripts,
-    #a.binaries + [("libvlc.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib", "BINARY"),("libvlccore.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib", "BINARY")],
-    a.binaries,
+    a.binaries + [("libvlc.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib", "BINARY"),("libvlccore.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib", "BINARY")],
+    #a.binaries,
     a.datas,
     [],
     name='basicvlc',

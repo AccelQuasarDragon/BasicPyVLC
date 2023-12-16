@@ -49,7 +49,7 @@ if platform == "darwin":
     # https://stackoverflow.com/questions/41858147/how-to-modify-imported-source-code-on-the-fly
 
 
-    str1 = '''
+    str1 = r'''
 def find_lib():
     dll = None
     plugin_path = os.environ.get('PYTHON_VLC_MODULE_PATH', None)
@@ -148,7 +148,7 @@ def find_lib():
     return (dll, plugin_path)
 '''
 
-    str2 = '''
+    str2 = r'''
 def find_lib():
     dll = None
     plugin_path = os.environ.get('PYTHON_VLC_MODULE_PATH', None)
@@ -214,20 +214,20 @@ def find_lib():
 
     elif sys.platform.startswith('darwin'):
         d = sys._MEIPASS
-            c = os.path.join(d, "VLC", "libvlccore.dylib")
-            p = os.path.join(d, "VLC", "libvlc.dylib")
-            print("paths exists and loaded?", c, p, os.path.exists(p), os.path.exists(c))
-            if os.path.exists(p) and os.path.exists(c):
-                # pre-load libvlccore VLC 2.2.8+
-                ctypes.CDLL(c)
-                dll = ctypes.CDLL(p)
-                for p in ('modules', 'plugins'):
-                    p = os.path.join(d, p)
-                    print("newp?", p)
-                    if os.path.isdir(p):
-                        plugin_path = p
-                        print("pluginpath", plugin_path, os.path.exists(plugin_path))
-                        break
+        c = os.path.join(d, "VLC", "libvlccore.dylib")
+        p = os.path.join(d, "VLC", "libvlc.dylib")
+        print("paths exists and loaded?", c, p, os.path.exists(p), os.path.exists(c))
+        if os.path.exists(p) and os.path.exists(c):
+            # pre-load libvlccore VLC 2.2.8+
+            ctypes.CDLL(c)
+            dll = ctypes.CDLL(p)
+            for p in ('modules', 'plugins'):
+                p = os.path.join(d, p)
+                print("newp?", p)
+                if os.path.isdir(p):
+                    plugin_path = p
+                    print("pluginpath", plugin_path, os.path.exists(plugin_path))
+                    break
         else:  # hope, some [DY]LD_LIBRARY_PATH is set...
             # pre-load libvlccore VLC 2.2.8+
             ctypes.CDLL('libvlccore.dylib')
@@ -289,6 +289,7 @@ def find_lib():
     #     # print("anothersource", spec2, source2)
     #     # new_source = modification_func(source)
     #     new_source = modification_func(sourceSTR)
+    #     print("str1 in newsource?", str1 in new_source, str2 in new_source)
     #     # print("newsourc e?", new_source, flush = True)
     #     module = importlib.util.module_from_spec(spec)
     #     codeobj = compile(new_source, module.__spec__.origin, 'exec')
@@ -306,8 +307,20 @@ def find_lib():
         spec = importlib.util.find_spec(module_name, package)
         source = spec.loader.get_source(module_name)
         new_source = modification_func(source)
-        module = importlib.util.module_from_spec(spec)
-        codeobj = compile(new_source, module.__spec__.origin, 'exec')
+        print("new source changed?", type(source), new_source)
+        print("check str1 in ", str1 in new_source, str2 in new_source)
+        module = importlib.util.module_from_spec(spec) #this is always the killer line, because vlc runs shit code it explodes
+        og = module.__spec__.origin
+        print("origin",type(og), og)
+        #delete the file and overwrite, it's so doomed
+        os.remove(og)
+        f = open(og, "w+")
+        f.write(new_source)
+        f.close()
+        print("INSPECT FILE1")
+        import time
+        time.sleep(500)
+        codeobj = compile(new_source, og, 'exec')
         exec(codeobj, module.__dict__)
         sys.modules[module_name] = module
         return module

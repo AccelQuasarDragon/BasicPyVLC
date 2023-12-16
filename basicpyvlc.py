@@ -214,8 +214,8 @@ def find_lib():
 
     elif sys.platform.startswith('darwin'):
         d = sys._MEIPASS
-        c = os.path.join(d, "VLC", "libvlccore.dylib")
-        p = os.path.join(d, "VLC", "libvlc.dylib")
+        c = os.path.join(d, "libvlccore.dylib")
+        p = os.path.join(d, "libvlc.dylib")
         print("paths exists and loaded?", c, p, os.path.exists(p), os.path.exists(c))
         if os.path.exists(p) and os.path.exists(c):
             # pre-load libvlccore VLC 2.2.8+
@@ -319,7 +319,7 @@ def find_lib():
         f.close()
         print("INSPECT FILE1")
         import time
-        time.sleep(500)
+        # time.sleep(500)
         codeobj = compile(new_source, og, 'exec')
         exec(codeobj, module.__dict__)
         sys.modules[module_name] = module

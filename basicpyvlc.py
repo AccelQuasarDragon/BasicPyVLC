@@ -327,6 +327,7 @@ def find_lib():
 
     print("try mod", flush = True)
     my_module = modify_and_import("vlc", None, lambda src: src.replace(str1, str2))
+    import vlc
     print("try mod2", flush = True)
 
     # def mpf(*args):

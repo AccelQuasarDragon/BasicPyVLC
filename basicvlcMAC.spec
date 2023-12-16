@@ -2,7 +2,7 @@
 
 medianame = "bigbuckbunny x265.mp4"
 import inspect
-import vlc
+#import vlc
 
 def collect_source_files(modules):
     datas = []
@@ -12,25 +12,26 @@ def collect_source_files(modules):
         datas.append((source, dest))
     return datas
 
-from PyInstaller.utils.hooks import collect_data_files, copy_metadata
-source_files = collect_source_files([vlc])  # return same structure as `collect_data_files()`
-source_files_toc = TOC((name, path, 'DATA') for path, name in source_files)
+#from PyInstaller.utils.hooks import collect_data_files, copy_metadata
+#source_files = collect_source_files([vlc])  # return same structure as `collect_data_files()`
+#source_files_toc = TOC((name, path, 'DATA') for path, name in source_files)
 
-vlclocation = vlc.__file__
+#vlclocation = vlc.__file__
 
 a = Analysis(
     ['basicpyvlc.py'],
-    #pathex=["/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
-    pathex=["/Applications/VLC.app"], #base VLC.app/Contents path here
+    pathex=["/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
+    #pathex=["/Applications/VLC.app"], #base VLC.app/Contents path here
     binaries=[
-        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins"),
-        ("/Applications/VLC.app/Contents/MacOS/plugins/*", "plugins"),
+        ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins"),
+        #("/Applications/VLC.app/Contents/MacOS/plugins/*", "plugins"),
         #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib","VLC"),
         #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib","VLC"),
         ],
     datas=[
         (medianame, "."),
-        (vlclocation,".")
+        #(vlclocation,"."),
+        ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/.venv/lib/python3.10/site-packages/vlc.py" , "."),
         #*collect_data_files("vlc", include_py_files=True),
         #*copy_metadata("vlc)
         ],

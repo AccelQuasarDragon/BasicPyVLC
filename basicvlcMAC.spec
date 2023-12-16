@@ -1,16 +1,39 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 medianame = "bigbuckbunny x265.mp4"
+import inspect
+import vlc
+
+def collect_source_files(modules):
+    datas = []
+    for module in modules:
+        source = inspect.getsourcefile(module)
+        dest = f"src.{module.__name__}"  # use "src." prefix
+        datas.append((source, dest))
+    return datas
+
+from PyInstaller.utils.hooks import collect_data_files, copy_metadata
+source_files = collect_source_files([vlc])  # return same structure as `collect_data_files()`
+source_files_toc = TOC((name, path, 'DATA') for path, name in source_files)
+
+vlclocation = vlc.__file__
 
 a = Analysis(
     ['basicpyvlc.py'],
-    pathex=["/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
+    #pathex=["/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
+    pathex=["/Applications/VLC.app"], #base VLC.app/Contents path here
     binaries=[
-        ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins"),
-        ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib","VLC"),
-        ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib","VLC"),
+        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins"),
+        ("/Applications/VLC.app/Contents/MacOS/plugins/*", "plugins"),
+        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib","VLC"),
+        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib","VLC"),
         ],
-    datas=[(medianame, ".")],
+    datas=[
+        (medianame, "."),
+        (vlclocation,".")
+        #*collect_data_files("vlc", include_py_files=True),
+        #*copy_metadata("vlc)
+        ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

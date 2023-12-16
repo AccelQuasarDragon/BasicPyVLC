@@ -251,13 +251,39 @@ def find_lib():
     import importlib
     import sys
     def modify_and_import(module_name, package, modification_func):
-        print("path??", __path__) #__path__ does not exist
+        # print("path??", __path__) #__path__ does not exist
         # https://docs.python.org/3/library/importlib.html#importlib.abc.MetaPathFinder.find_spec
         #https://stackoverflow.com/a/66797745
         import importlib.util
+
+        # https://stackoverflow.com/questions/61379330/problem-with-inspect-using-pyinstaller-can-get-source-of-class-but-not-function
+
+        import inspect
+        # import vlc
+        specV = importlib.util.find_spec(module_name, package) 
+        
+        # print(inspect.getfile(specV))
+        print("getspec", specV, os.path.isfile(specV.origin)) 
+        import time
+        newvlc = os.path.join(sys._MEIPASS, "vlc.py")
+        sourcee = inspect.getsource(newvlc)
+        print("source", sourcee)
+        time.sleep(500)
+        print(inspect.getmodule(specV)) 
+        source_Bar = inspect.getsource(specV)
+        print("SOURCE", source_Bar)
+
+        # print(inspect.getfile(specV))
+        # print(inspect.getmodule(specV))
+        # source_foo = inspect.getsource(specV)
+        # print("SOURCE", source_foo)
+
         spec = importlib.util.find_spec(module_name, package) 
-        source = spec.loader.get_source(module_name)
-        print("oldsource",source, flush = True)
+        source = spec.loader.get_source(module_name) #PROBLEM IS THAT THIS IS NONE FOR SOME REASON, see here: https://github.com/pyinstaller/pyinstaller/issues/4764
+        print("oldsource",spec,source, flush = True)
+        spec2 = importlib.util.find_spec('textwrap')
+        source2 = spec2.loader.get_source('textwrap')
+        print("anothersource", spec2, source2)
         new_source = modification_func(source)
         print("newsourc e?", new_source, flush = True)
         module = importlib.util.module_from_spec(spec)

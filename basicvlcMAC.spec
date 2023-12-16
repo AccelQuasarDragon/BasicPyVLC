@@ -41,6 +41,10 @@ a = Analysis(
     runtime_hooks=[],
     excludes=[],
     noarchive=False,
+    #https://github.com/pyinstaller/pyinstaller/issues/7851#issuecomment-1677986648
+    module_collection_mode={
+        'vlc': 'py',
+    }
 )
 pyz = PYZ(a.pure)
 

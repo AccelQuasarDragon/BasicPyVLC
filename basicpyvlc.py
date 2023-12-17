@@ -326,6 +326,9 @@ def find_lib():
         return module
 
     print("try mod", flush = True)
+    #checking to see if pyinstaller module_collection_mode py sends the py file to tmpdir
+    import time
+    time.sleep(500)
     my_module = modify_and_import("vlc", None, lambda src: src.replace(str1, str2))
     import vlc
     print("try mod2", flush = True)

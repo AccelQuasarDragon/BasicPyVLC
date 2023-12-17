@@ -4,8 +4,8 @@ medianame = "bigbuckbunny x265.mp4"
 
 a = Analysis(
     ['basicpyvlc.py'],
-    pathex=["/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
-    binaries=[("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins")],
+    pathex=["/Users/kivyschool/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
+    binaries=[("/Users/kivyschool/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins")],
     datas=[(medianame, ".")],
     hiddenimports=[],
     hookspath=[],
@@ -24,8 +24,8 @@ exe = EXE(
     pyz,
     a.scripts,
     a.binaries + [
-        ("libvlc.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib", "BINARY"),
-        ("libvlccore.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib", "BINARY")
+        ("libvlc.dylib", "/Users/kivyschool/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib", "BINARY"),
+        ("libvlccore.dylib", "/Users/kivyschool/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib", "BINARY")
         ],
     #a.binaries,
     a.datas,

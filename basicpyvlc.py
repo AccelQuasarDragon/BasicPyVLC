@@ -23,31 +23,7 @@ if platform == "darwin":
     import os
     import time
     import PySide6.QtWidgets as QtWidgets
-    import ctypes
-    import sys
-
-    # if hasattr(sys, "_MEIPASS"):
-    #     print("sys meipass attr")
-    #     # d = '/Applications/VLC.app/Contents/MacOS/'
-    #     # p = d + 'lib/libvlc.dylib'
-    #     d = sys._MEIPASS
-    #     p = os.path.join(d, "libvlc.dylib")
-    #     p2 = os.path.join(d,'libvlccore.dylib')
-    #     print("check dylib and libvlcore",
-    #           os.path.exists(p),
-    #           os.path.exists(p2),
-    #           )
-    #     if os.path.exists(p):
-    #         # force pre-load of libvlccore.dylib  # ****
-    #         # ctypes.CDLL(d + 'lib/libvlccore.dylib')  # ****
-    #         ctypes.CDLL(p2)  # **** #preload libvlccore
-    #         dll = ctypes.CDLL(p) #now load libvlc
-    # if hasattr(sys, "_MEIPASS"):
-    #     with os.add_dll_directory(os.path.join(sys._MEIPASS, "VLC")):
-    #         import vlc
-
-    # https://stackoverflow.com/questions/41858147/how-to-modify-imported-source-code-on-the-fly
-
+    import sys    
 
     str1 = r'''
 def find_lib():
@@ -250,59 +226,8 @@ def find_lib():
     '''
     import importlib
     import sys
-    # def modify_and_import(module_name, package, modification_func):
-    #     # print("path??", __path__) #__path__ does not exist
-    #     # https://docs.python.org/3/library/importlib.html#importlib.abc.MetaPathFinder.find_spec
-    #     #https://stackoverflow.com/a/66797745
-    #     import importlib.util
 
-    #     # https://stackoverflow.com/questions/61379330/problem-with-inspect-using-pyinstaller-can-get-source-of-class-but-not-function
-
-    #     import inspect
-    #     # import vlc
-    #     # specV = importlib.util.find_spec(module_name, package) 
-        
-    #     # # print(inspect.getfile(specV))
-    #     # print("getspec", specV, os.path.isfile(specV.origin)) 
-    #     # import time
-    #     # newvlc = os.path.join(sys._MEIPASS, "vlc.py")
-    #     # sourcee = inspect.getsource(newvlc)
-    #     # print("source", sourcee)
-    #     # time.sleep(500)
-    #     # print(inspect.getmodule(specV)) 
-    #     # source_Bar = inspect.getsource(specV)
-    #     # print("SOURCE", source_Bar)
-
-    #     # print(inspect.getfile(specV))
-    #     # print(inspect.getmodule(specV))
-    #     # source_foo = inspect.getsource(specV)
-    #     # print("SOURCE", source_foo)
-
-    #     # spec = importlib.util.find_spec(module_name, package) 
-    #     spec = importlib.util.find_spec(module_name, sys._MEIPASS) 
-    #     source = spec.loader.get_source(module_name) #PROBLEM IS THAT THIS IS NONE FOR SOME REASON, see here: https://github.com/pyinstaller/pyinstaller/issues/4764 (because pyinstaller does not get .py only pyc, and I don't want to set module_collection_mode to .py as per (FIX THIS IT ACTUALLY WORKS ON A PER-MODULE BASIS): https://github.com/pyinstaller/pyinstaller/issues/7851#issuecomment-1677986648 )
-    #     f = open(os.path.join(sys._MEIPASS,"vlc.py"), "r")
-    #     sourceSTR = f.read()
-    #     # print("oldsource",spec,source, flush = True)
-    #     # spec2 = importlib.util.find_spec('textwrap')
-    #     # source2 = spec2.loader.get_source('textwrap')
-    #     # print("anothersource", spec2, source2)
-    #     # new_source = modification_func(source)
-    #     new_source = modification_func(sourceSTR)
-    #     print("str1 in newsource?", str1 in new_source, str2 in new_source)
-    #     # print("newsourc e?", new_source, flush = True)
-    #     module = importlib.util.module_from_spec(spec)
-    #     codeobj = compile(new_source, module.__spec__.origin, 'exec')
-        
-    #     # codeobj = compile(new_source, sys._MEIPASS, 'exec')
-    #     # exec(codeobj, codeobj.__dict__)
-    #     exec(codeobj, module.__dict__)
-    #     sys.modules[module_name] = module
-    #     print("vlc in sys modules?", "vlc" in sys.modules)
-    #     print("vlc file??", vlc.__file__)
-    #     return module
-
-
+    # https://stackoverflow.com/questions/41858147/how-to-modify-imported-source-code-on-the-fly
     def modify_and_import(module_name, package, modification_func):
         spec = importlib.util.find_spec(module_name, package)
         source = spec.loader.get_source(module_name)
@@ -327,38 +252,8 @@ def find_lib():
 
     print("try mod", flush = True)
     #checking to see if pyinstaller module_collection_mode py sends the py file to tmpdir
-    import time
-    time.sleep(500)
     my_module = modify_and_import("vlc", None, lambda src: src.replace(str1, str2))
     import vlc
-    print("try mod2", flush = True)
-
-    # def mpf(*args):
-    #     if hasattr(sys, "_MEIPASS"):
-    #         d = sys._MEIPASS
-    #         c = os.path.join(d, "VLC", "libvlccore.dylib")
-    #         p = os.path.join(d, "VLC", "libvlc.dylib")
-    #         print("paths exists and loaded?", c, p, os.path.exists(p), os.path.exists(c))
-    #         if os.path.exists(p) and os.path.exists(c):
-    #             # pre-load libvlccore VLC 2.2.8+
-    #             ctypes.CDLL(c)
-    #             dll = ctypes.CDLL(p)
-    #             for p in ('modules', 'plugins'):
-    #                 p = os.path.join(d, p)
-    #                 print("newp?", p)
-    #                 if os.path.isdir(p):
-    #                     plugin_path = p
-    #                     print("pluginpath", plugin_path, os.path.exists(plugin_path))
-    #                     break
-    #         else:  # hope, some [DY]LD_LIBRARY_PATH is set...
-    #             # pre-load libvlccore VLC 2.2.8+
-    #             ctypes.CDLL('libvlccore.dylib')
-    #             dll = ctypes.CDLL('libvlc.dylib')
-    #             print("WROOOOOOOONNNNNNNGGGGG")
-
-    # import vlc
-    # vlc.dll, vlc.plugin_path = mpf()
-
 
     vlc_player = vlc.MediaPlayer() 
     medianame = "bigbuckbunny x265.mp4"

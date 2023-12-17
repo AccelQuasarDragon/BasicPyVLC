@@ -1,36 +1,12 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 medianame = "bigbuckbunny x265.mp4"
-import inspect
-#import vlc
-
-def collect_source_files(modules):
-    datas = []
-    for module in modules:
-        source = inspect.getsourcefile(module)
-        dest = f"src.{module.__name__}"  # use "src." prefix
-        datas.append((source, dest))
-    return datas
-
-#from PyInstaller.utils.hooks import collect_data_files, copy_metadata
-#source_files = collect_source_files([vlc])  # return same structure as `collect_data_files()`
-#source_files_toc = TOC((name, path, 'DATA') for path, name in source_files)
-
-#vlclocation = vlc.__file__
 
 a = Analysis(
     ['basicpyvlc.py'],
     pathex=["/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
-    binaries=[
-        ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins"),
-        ],
-    datas=[
-        (medianame, "."),
-        #(vlclocation,"."),
-        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/.venv/lib/python3.10/site-packages/vlc.py" , "."),
-        #*collect_data_files("vlc", include_py_files=True),
-        #*copy_metadata("vlc)
-        ],
+    binaries=[("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins")],
+    datas=[(medianame, ".")],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -47,7 +23,10 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries + [("libvlc.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib", "BINARY"),("libvlccore.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib", "BINARY")],
+    a.binaries + [
+        ("libvlc.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib", "BINARY"),
+        ("libvlccore.dylib", "/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib", "BINARY")
+        ],
     #a.binaries,
     a.datas,
     [],

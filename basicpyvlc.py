@@ -259,17 +259,18 @@ def find_lib():
         print("new source changed?", type(source), new_source)
         print("check str1 in ", str1 in new_source, str2 in new_source)
         module = importlib.util.module_from_spec(spec) #this is always the killer line, because vlc runs shit code it explodes
-        og = module.__spec__.origin
-        print("origin",type(og), og)
-        #delete the file and overwrite, it's so doomed
-        os.remove(og)
-        f = open(og, "w+")
-        f.write(new_source)
-        f.close()
-        print("INSPECT FILE1")
+        # og = module.__spec__.origin
+        # print("origin",type(og), og)
+        # #delete the file and overwrite, it's so doomed
+        # os.remove(og)
+        # f = open(og, "w+")
+        # f.write(new_source)
+        # f.close()
+        # print("INSPECT FILE1")
         import time
         # time.sleep(500)
-        codeobj = compile(new_source, og, 'exec')
+        # codeobj = compile(new_source, og, 'exec')
+        codeobj = compile(new_source, module.__spec__.origin, 'exec')
         exec(codeobj, module.__dict__)
         sys.modules[module_name] = module
         return module

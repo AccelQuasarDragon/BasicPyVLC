@@ -21,12 +21,8 @@ def collect_source_files(modules):
 a = Analysis(
     ['basicpyvlc.py'],
     pathex=["/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
-    #pathex=["/Applications/VLC.app"], #base VLC.app/Contents path here
     binaries=[
         ("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins"),
-        #("/Applications/VLC.app/Contents/MacOS/plugins/*", "plugins"),
-        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlc.dylib","VLC"),
-        #("/Users/raidraptorultimatefalcon/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/lib/libvlccore.dylib","VLC"),
         ],
     datas=[
         (medianame, "."),
@@ -55,7 +51,7 @@ exe = EXE(
     #a.binaries,
     a.datas,
     [],
-    name='basicvlc',
+    name='MACvlcUninstalled',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -73,7 +69,7 @@ exe = EXE(
 # https://pyinstaller.org/en/stable/spec-files.html#spec-file-options-for-a-macos-bundle
 app = BUNDLE(
     exe,
-    name='basicpyVLC.app',
+    name='MacpyVLCUninstalled.app',
     #icon="", #put your icon path here
     bundle_identifier=None,
 )

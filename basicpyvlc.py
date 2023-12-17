@@ -16,7 +16,8 @@ if platform == "win32": #https://docs.python.org/3/library/sys.html#sys.platform
     length = vlc_player.get_length() #time in ms (divide by 1000 to get in seconds)
     newoffset = length/1000 - offset
     time.sleep(newoffset)
-if platform == "darwin": #works in terminal when vlc.app is in applications folder
+# if platform == "darwin": 
+if platform == "darwin_basic": #works in terminal and packaged when vlc.app is in applications folder
     #vlc has a problem with mac displaying, see
     #problem description: https://github.com/PySimpleGUI/PySimpleGUI/issues/5581
     #solution: https://stackoverflow.com/a/75022685
@@ -39,7 +40,8 @@ if platform == "darwin": #works in terminal when vlc.app is in applications fold
     vlc_player.set_nsobject(vlcWidget.winId())
     vlc_player.play() #you need to play vlc first else the qtapp will just open and hold forever
     vlcApp.exec()
-if platform == "darwin_VLC_UNINSTALLED": #run this if you want your app to work when VLC is uninstalled (or you moved VLC.app out of the applications folder, set the string to "darwin")
+# if platform == "darwin_VLC_UNINSTALLED": #run this if you want your app to work when VLC is uninstalled (or you moved VLC.app out of the applications folder, set the string to "darwin")
+if platform == "darwin": 
     #vlc has a problem with mac displaying, see
     #problem description: https://github.com/PySimpleGUI/PySimpleGUI/issues/5581
     #solution: https://stackoverflow.com/a/75022685

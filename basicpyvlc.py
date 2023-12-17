@@ -22,7 +22,6 @@ if platform == "darwin_basic": #works in terminal and packaged when vlc.app is i
     #problem description: https://github.com/PySimpleGUI/PySimpleGUI/issues/5581
     #solution: https://stackoverflow.com/a/75022685
     import os
-    import time
     import PySide6.QtWidgets as QtWidgets
     import sys
     import vlc
@@ -46,7 +45,6 @@ if platform == "darwin":
     #problem description: https://github.com/PySimpleGUI/PySimpleGUI/issues/5581
     #solution: https://stackoverflow.com/a/75022685
     import os
-    import time
     import PySide6.QtWidgets as QtWidgets
     import sys    
 

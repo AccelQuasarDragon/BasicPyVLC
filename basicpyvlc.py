@@ -16,7 +16,30 @@ if platform == "win32": #https://docs.python.org/3/library/sys.html#sys.platform
     length = vlc_player.get_length() #time in ms (divide by 1000 to get in seconds)
     newoffset = length/1000 - offset
     time.sleep(newoffset)
-if platform == "darwin":
+if platform == "darwin": #works in terminal when vlc.app is in applications folder
+    #vlc has a problem with mac displaying, see
+    #problem description: https://github.com/PySimpleGUI/PySimpleGUI/issues/5581
+    #solution: https://stackoverflow.com/a/75022685
+    import os
+    import time
+    import PySide6.QtWidgets as QtWidgets
+    import sys
+    import vlc
+    vlc_player = vlc.MediaPlayer() 
+    medianame = "bigbuckbunny x265.mp4"
+    mediapath = os.path.join(os.path.dirname(__file__), medianame)
+    media = vlc.Media(mediapath)
+    vlc_player.set_media(media)
+
+    vlcApp = QtWidgets.QApplication([])
+    vlcWidget = QtWidgets.QFrame()
+    vlcWidget.resize(700,700)
+    vlcWidget.show()
+
+    vlc_player.set_nsobject(vlcWidget.winId())
+    vlc_player.play() #you need to play vlc first else the qtapp will just open and hold forever
+    vlcApp.exec()
+if platform == "darwin_VLC_UNINSTALLED": #run this if you want your app to work when VLC is uninstalled (or you moved VLC.app out of the applications folder, set the string to "darwin")
     #vlc has a problem with mac displaying, see
     #problem description: https://github.com/PySimpleGUI/PySimpleGUI/issues/5581
     #solution: https://stackoverflow.com/a/75022685
@@ -225,7 +248,6 @@ def find_lib():
     return (dll, plugin_path)
     '''
     import importlib
-    import sys
 
     # https://stackoverflow.com/questions/41858147/how-to-modify-imported-source-code-on-the-fly
     def modify_and_import(module_name, package, modification_func):
@@ -250,7 +272,7 @@ def find_lib():
         sys.modules[module_name] = module
         return module
 
-    print("try mod", flush = True)
+    print("trying mod!", flush = True)
     #checking to see if pyinstaller module_collection_mode py sends the py file to tmpdir
     my_module = modify_and_import("vlc", None, lambda src: src.replace(str1, str2))
     import vlc

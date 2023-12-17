@@ -259,7 +259,6 @@ def find_lib():
         print("new source changed?", type(source), new_source)
         print("check str1 in ", str1 in new_source, str2 in new_source)
         module = importlib.util.module_from_spec(spec) #this is always the killer line, because vlc runs find_lib() immediately AKA it explodes (only when packaging .pyc file with PyInstaller)
-        import time
         codeobj = compile(new_source, module.__spec__.origin, 'exec')
         exec(codeobj, module.__dict__)
         sys.modules[module_name] = module

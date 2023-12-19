@@ -17,13 +17,13 @@ Check the example test py:
 
 `python basicvlc.py`
 
-to compile (add your paths to VLC, `libvlc.dll`, `libvlc.dylib`, `libvlccore.dylib`, `plugins` folder, etc)
+To compile (add your paths to VLC, `libvlc.dll`, `libvlc.dylib`, `libvlccore.dylib`, `plugins` folder, etc)
 
 Then try:
 
 `python -m PyInstaller basicvlcWIN.spec --clean ` OR 
 
-`python -m PyInstaller basicvlcMACBasic.spec --clean ` 
+`python -m PyInstaller basicvlcMACBasic.spec --clean ` OR
 
 `python -m PyInstaller basicvlcMACVLCUninstalled.spec --clean ` 
 

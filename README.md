@@ -17,7 +17,7 @@ Check the example test py:
 
 `python basicvlc.py`
 
-To compile (add your paths to VLC, `libvlc.dll`, `libvlc.dylib`, `libvlccore.dylib`, `plugins` folder, etc)
+To compile, add these paths to your specfile: VLC, `libvlc.dll`, `libvlc.dylib`, `libvlccore.dylib`, `plugins` folder, etc)
 
 Then try:
 

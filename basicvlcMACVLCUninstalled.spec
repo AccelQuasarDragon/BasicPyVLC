@@ -4,7 +4,7 @@ medianame = "bigbuckbunny x265.mp4"
 
 a = Analysis(
     ['basicpyvlc.py'],
-    pathex=["/Users/kivyschool/CODING/test/BasicPyVLC/dist/VLC.app"], #base VLC.app/Contents path here
+    pathex=["/Users/kivyschool/CODING/test/BasicPyVLC/dist/VLC.app/Contents"], #base VLC.app/Contents path here
     binaries=[("/Users/kivyschool/CODING/test/BasicPyVLC/dist/VLC.app/Contents/MacOS/plugins/*", "plugins")],
     datas=[(medianame, ".")],
     hiddenimports=[],
